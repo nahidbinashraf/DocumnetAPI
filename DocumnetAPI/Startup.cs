@@ -1,7 +1,9 @@
+using DocumnetAPI.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,7 +27,11 @@ namespace DocumnetAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DocumentDBContext>(opt => opt.UseSqlServer(
+                Configuration.GetConnectionString("DocumentAPIDB")
+            )) ;
             services.AddControllers();
+            services.AddScoped<IDocumentRepo, MockDocumentRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
