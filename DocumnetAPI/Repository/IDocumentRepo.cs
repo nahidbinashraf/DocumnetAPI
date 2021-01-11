@@ -8,7 +8,7 @@ namespace DocumnetAPI.Repository
 {
     public interface IDocumentRepo
     {
-        IEnumerable<Document> GetDocuments();
+        IEnumerable<Document> GetAllDocuments();
         Document GetDocumentByID(int ID);
     }
 }

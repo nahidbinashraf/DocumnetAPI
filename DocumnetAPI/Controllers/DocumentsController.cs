@@ -1,4 +1,6 @@
-﻿using DocumnetAPI.Repository;
+﻿using AutoMapper;
+using DocumnetAPI.DTOModels;
+using DocumnetAPI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,20 +15,25 @@ namespace DocumnetAPI.Controllers
     public class DocumentsController : ControllerBase
     {
         private readonly IDocumentRepo _repoContext;
+        private readonly IMapper _mapper;
 
-        public DocumentsController(IDocumentRepo documentRepo)
+        public DocumentsController(IDocumentRepo documentRepo, IMapper mapper)
         {
             _repoContext = documentRepo;
+            _mapper = mapper;
         }
         [HttpGet]
-        public ActionResult GetDocuments()
+        public ActionResult <IEnumerable<DocumentDTO>> GetDocuments()
         {
-            return Ok(_repoContext.GetDocuments());
+          
+            return Ok(_mapper.Map<IEnumerable<DocumentDTO>>(_repoContext.GetAllDocuments()));
         }
         [HttpGet("{id}")]
-        public ActionResult GetDocumentByID(int id)
+        public ActionResult <DocumentDTO> GetDocumentByID(int id)
         {
-            return Ok(_repoContext.GetDocumentByID(id));
+            var document = _repoContext.GetDocumentByID(id);
+            if (document != null) return _mapper.Map<DocumentDTO>(document);            
+            return NotFound();
 
         }
     }

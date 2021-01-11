@@ -1,3 +1,4 @@
+using AutoMapper;
 using DocumnetAPI.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,8 +31,9 @@ namespace DocumnetAPI
             services.AddDbContext<DocumentDBContext>(opt => opt.UseSqlServer(
                 Configuration.GetConnectionString("DocumentAPIDB")
             )) ;
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
-            services.AddScoped<IDocumentRepo, MockDocumentRepo>();
+            services.AddScoped<IDocumentRepo, SqlDocumentRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

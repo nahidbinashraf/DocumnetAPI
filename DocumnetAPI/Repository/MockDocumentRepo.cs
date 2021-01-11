@@ -18,7 +18,7 @@ namespace DocumnetAPI.Repository
 
 
 
-        public IEnumerable<Document> GetDocuments()
+        public IEnumerable<Document> GetAllDocuments()
         {
             return _documents.ToList();
         }
