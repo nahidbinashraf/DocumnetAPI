@@ -12,7 +12,9 @@ namespace DocumnetAPI.Profiles
     {
         public DocumentProfiles()
         {
-            CreateMap<Document, DocumentDTO>();
+            CreateMap<Document, DocumentReadDTO>();
+            CreateMap<DocumentCreateDTO, Document>();
+            CreateMap<DocumentUpdateDTO, Document>();
         }
     }
 }

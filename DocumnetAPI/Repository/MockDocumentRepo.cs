@@ -16,7 +16,10 @@ namespace DocumnetAPI.Repository
             new Document{ ID=4, HowTo="Main method", LineNo="4", Platform="C#"},
         };
 
-
+        public void CreateDocument(Document document)
+        {
+            throw new NotImplementedException();
+        }
 
         public IEnumerable<Document> GetAllDocuments()
         {
@@ -27,6 +30,14 @@ namespace DocumnetAPI.Repository
             return _documents.Where(x => x.ID == ID).FirstOrDefault();
         }
 
-     
+        public bool SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateDocuemt(Document document)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

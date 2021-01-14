@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DocumnetAPI.DTOModels
 {
-    public class DocumentDTO
+    public class DocumentReadDTO
     { 
         public int ID { get; set; }       
         public string HowTo { get; set; }       

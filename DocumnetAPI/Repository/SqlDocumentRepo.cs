@@ -14,6 +14,16 @@ namespace DocumnetAPI.Repository
         {
             _context = context;
         }
+
+        public void CreateDocument(Document document)
+        {
+            if(document == null)
+            {
+                throw new ArgumentNullException();
+            }
+            _context.Add(document);
+        }
+
         public IEnumerable<Document> GetAllDocuments()
         {
            return  _context.Documnets.ToList();
@@ -22,6 +32,17 @@ namespace DocumnetAPI.Repository
         public Document GetDocumentByID(int ID)
         {
            return _context.Documnets.FirstOrDefault(x => x.ID == ID);
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
+
+        }
+
+        public void UpdateDocuemt(Document document)
+        {
+            //nothin
         }
     }
 }

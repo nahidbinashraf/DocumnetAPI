@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DocumnetAPI.DTOModels;
+using DocumnetAPI.Models;
 using DocumnetAPI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,18 +24,43 @@ namespace DocumnetAPI.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public ActionResult <IEnumerable<DocumentDTO>> GetDocuments()
+        public ActionResult<IEnumerable<DocumentReadDTO>> GetDocuments()
         {
-          
-            return Ok(_mapper.Map<IEnumerable<DocumentDTO>>(_repoContext.GetAllDocuments()));
+
+            return Ok(_mapper.Map<IEnumerable<DocumentReadDTO>>(_repoContext.GetAllDocuments()));
         }
-        [HttpGet("{id}")]
-        public ActionResult <DocumentDTO> GetDocumentByID(int id)
+        [HttpGet("{id}", Name = "GetDocumentByID")]
+        public ActionResult<DocumentReadDTO> GetDocumentByID(int id)
         {
             var document = _repoContext.GetDocumentByID(id);
-            if (document != null) return _mapper.Map<DocumentDTO>(document);            
+            if (document != null) return Ok(_mapper.Map<DocumentReadDTO>(document));
             return NotFound();
 
+        }
+        [HttpPost]
+        public ActionResult<DocumentReadDTO> CreateDocument(DocumentCreateDTO createDTO)
+        {
+            var document = _mapper.Map<Document>(createDTO);
+            _repoContext.CreateDocument(document);
+            _repoContext.SaveChanges();
+
+            var documntReadModel = _mapper.Map<DocumentReadDTO>(document);
+
+            return CreatedAtRoute(nameof(GetDocumentByID), new { id = documntReadModel.ID }, documntReadModel);
+
+
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateDocuemnt(int id, DocumentUpdateDTO updateDTO)
+        {
+            var document = _repoContext.GetDocumentByID(id);
+            if (document == null) return NotFound();
+
+            _mapper.Map(updateDTO, document);
+            _repoContext.UpdateDocuemt(document);
+            _repoContext.SaveChanges();
+            return NoContent();
         }
     }
 }
