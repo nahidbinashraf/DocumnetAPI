@@ -21,6 +21,11 @@ namespace DocumnetAPI.Repository
             throw new NotImplementedException();
         }
 
+        public void DeleteDocument(Document document)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Document> GetAllDocuments()
         {
             return _documents.ToList();

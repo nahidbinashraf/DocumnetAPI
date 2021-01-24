@@ -15,5 +15,7 @@ namespace DocumnetAPI.Repository
 
         void UpdateDocuemt(Document document);
 
+        void DeleteDocument(Document document);
+
     }
 }

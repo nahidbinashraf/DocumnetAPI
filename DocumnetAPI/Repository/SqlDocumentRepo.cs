@@ -24,6 +24,15 @@ namespace DocumnetAPI.Repository
             _context.Add(document);
         }
 
+        public void DeleteDocument(Document document)
+        {
+            if (document == null)
+            {
+                throw new ArgumentNullException(nameof(document));
+            }
+            _context.Documnets.Remove(document);
+        }
+
         public IEnumerable<Document> GetAllDocuments()
         {
            return  _context.Documnets.ToList();
