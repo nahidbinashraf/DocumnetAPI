@@ -62,5 +62,15 @@ namespace DocumnetAPI.Controllers
             _repoContext.SaveChanges();
             return NoContent();
         }
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCommand(int id)
+        {
+            var document = _repoContext.GetDocumentByID(id);
+            if (document == null) return NotFound();
+            _repoContext.DeleteDocument(document);
+            _repoContext.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
